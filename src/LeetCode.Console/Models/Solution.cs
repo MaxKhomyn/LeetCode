@@ -4,7 +4,7 @@
     {
         #region Methods
 
-        #region TwoSum
+        #region #1 TwoSum
 
         public int[] TwoSum(int[] nums, int target)
         {
@@ -22,9 +22,9 @@
             return new int[2] { 0, 1 };
         }
 
-        #endregion TwoSum
+        #endregion #1 TwoSum
 
-        #region AddTwoNumbers
+        #region #2 AddTwoNumbers
 
         //ListNode First = new ListNode(2) { next = new ListNode(4) { next = new ListNode(3) } };
         //ListNode Second = new ListNode(5) { next = new ListNode(6) { next = new ListNode(4) } };
@@ -66,9 +66,9 @@
 
         private ListNode NewListNode(int value) => value >= 10 ? new ListNode(value - 10) : new ListNode(value);
 
-        #endregion AddTwoNumbers
+        #endregion #2 AddTwoNumbers
 
-        #region LengthOfLongestSubstring
+        #region #3 LengthOfLongestSubstring
 
         public int LengthOfLongestSubstring(string s)
         {
@@ -96,9 +96,9 @@
             return max;
         }
 
-        #endregion LengthOfLongestSubstring
+        #endregion #3 LengthOfLongestSubstring
 
-        #region FindMedianSortedArrays
+        #region #4 FindMedianSortedArrays
 
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
@@ -153,16 +153,135 @@
             }
         }
 
-        #endregion FindMedianSortedArrays
+        #endregion #4 FindMedianSortedArrays
 
-        #region LongestPalindrome
+        #region #5 LongestPalindrome
 
         public string LongestPalindrome(string s)
         {
             return "";
         }
 
-        #endregion LongestPalindrome
+        #endregion #5 LongestPalindrome
+
+        #region #6 Convert
+
+        public string Convert(string s, int numRows)
+        {
+            if (numRows == 1) return s;
+
+            string[,] sMatrix = new string[numRows, s.Length];
+            string rezult = "";
+
+            int Row = 0, Cell = 0;
+            bool Down = true;
+            for (int i = 0; i < s.Length; i++)
+            {
+                sMatrix[Row, Cell] += s[i];
+                if (Row == 0) Down = true;
+
+                if (Down)
+                {
+                    if (Row < numRows-1) Row++;
+                    else if (Row == numRows-1 && Row != 0)
+                    {
+                        Down = false;
+                        Row--; Cell++;
+                    }
+                    else if (Row == 0)
+                    {
+                        Cell++;
+                    }
+                }
+                else
+                {
+                    Row--; Cell++;
+                    if (Row == 0) Down = true;
+                }
+            }
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < s.Length; j++)
+                {
+                    if (sMatrix[i, j] != null) rezult += sMatrix[i, j];
+                }
+            }
+
+            return rezult;
+        }
+
+        #endregion #6 Convert
+
+        #region #7 Reverse
+
+        public int Reverse(int x)
+        {
+            bool IsNegative = x < 0;
+
+            if (IsNegative) x *= -1;
+
+            string rez = Reverse(x.ToString());
+            int value;
+            if (int.TryParse(rez, out value))
+                return IsNegative ? -int.Parse(rez) : int.Parse(rez);
+            else return 0;
+        }
+
+        public string Reverse(string x)
+        {
+            if (x.Length <= 1) return x;
+            return Reverse(x.Substring(1)) + x[0];
+        }
+
+        #endregion #7 Reverse
+
+        #region #8 MyAtoi
+
+        //public int MyAtoi(string str)
+        //{
+        //    if (str.Length < 1) return 0;
+
+        //    int rezult = 0;
+        //    if (str[0] != ' ' && !IsInt(str[0].ToString())) return 0;
+        //    else if (str[0] == ' ')
+        //    {
+        //        string strTmp = str.Replace(" ", "");
+        //        if (strTmp[0] != ' ' && !IsInt(strTmp[0].ToString())) return 0;
+        //    }
+
+        //    string rezultStr = System.Text.RegularExpressions.Regex.Match(str, @"^[0-9+-]+$").Value;
+
+        //    try { int.Parse(rezultStr); }
+        //    catch (System.OverflowException error) { return rezultStr[0] == '-'? -2147483648 : 2147483647; }
+        //    catch
+        //    {
+        //        for (int i = 0; i < str; i++)
+        //        {
+
+        //        }
+        //        if (int.TryParse(str, out rezult))
+        //        {
+        //            return int.Parse(str);
+        //        }
+        //        return 0;
+        //    }           
+        //}
+
+        //private bool IsInt(string s) => System.Text.RegularExpressions.Regex.Match(s, @"^[0-9+-]+$").Success;
+
+        #endregion # MyAtoi
+
+        #region #9 IsPalindrome
+
+        public bool IsPalindrome(int x)
+        {
+            string xStr = x.ToString();
+            if (xStr.Length < 2) return true;
+
+            return xStr.Equals(Reverse(xStr));
+        }
+
+        #endregion #9 IsPalindrome
 
         #endregion Methods
     }
